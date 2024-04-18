@@ -1,32 +1,41 @@
 <!DOCTYPE html>
 <html>
 <%- include("../Partials/header.ejs")%>
-<div class="header">
-  <div class="logo">
-    <h1>Create a new blog</h1>
-  </div>
-  <%- include("../Partials/nav.ejs")%>
-</div>
-<form>
+<div id="container">
+  <%- include("../Partials/landing.ejs")%>
+  <form action="/blogs" method="POST">
+    <label>
+      <span>
+        title
+      </span>
+      <input type="text" name="title" required="" />
+  </label>
   <label>
     <span>
-      title
+      category
     </span>
-    <input type="text" name="blog-title" required="" />
+    <input type="text" name="category" required="" />
 </label>
 <label>
   <span>
-    snippet
+    author
   </span>
-  <input type="text" name="blog-snippet" required="" />
+  <input type="text" name="author" required="" />
+</label>
+<label>
+<span>
+snippet
+</span>
+<input type="text" name="snippet" required="" />
 </label>
 <label>
 <span>
 blog
 </span>
-<textarea type="text" name="blog-body" required></textarea>
+<textarea type="text" name="body" required></textarea>
 </label>
 <button class="create-btn">submit blog</button>
 </form>
 <%- include("../Partials/footer.ejs")%>
+</div>
 </html>

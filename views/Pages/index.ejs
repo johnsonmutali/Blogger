@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html>
 <%- include("../Partials/header.ejs")%>
-<div class="header">
-  <div class="logo">
-    <h1>Blogger</h1>
-  </div>
-  <%- include("../Partials/nav.ejs")%>
-</div>
-<div class="main">
+<div id="container">
+  <%- include("../Partials/landing.ejs")%>
+  <div class="main">
   <p>
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce at erat tincidunt
 ante ultricies mollis at bibendum ligula. Donec quis velit finibus, tempus lacus
@@ -38,4 +34,5 @@ volutpat. Phasellus vitae fermentum nisi.
   </p>
 </div>
 <%- include("../Partials/footer.ejs")%>
+</div>
 </html>

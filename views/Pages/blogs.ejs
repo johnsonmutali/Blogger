@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<div id="container">
+  <%- include("../Partials/landing.ejs")%>
+  <div class="body">
+    <% blogs.forEach(blog => {
+      %>
+      <div class="blog">
+        <h3 class="blog__title"><%= blog.title%></h3>
+        <p class="blog__author">
+          <%= blog.snippet%>
+        </p>
+      </div>
+      <%
+    })%>
+  </div>
+  <%- include("../Partials/footer.ejs")%>
+</div>
+</html>
