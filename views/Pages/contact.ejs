@@ -1,12 +1,62 @@
 <!DOCTYPE html>
 <html>
-<%- include("../Partials/header.ejs")%>
-<div class="header">
-  <div class="logo">
-    <h1>Blogger</h1>
-  </div>
-  <%- include("../Partials/nav.ejs")%>
+<div id="container">
+  <%- include("../Partials/landing.ejs")%>
+  <div class="body">
+    <div class="cta">
+      <form class="contact-form">
+        <label class="contact-label">
+          <span>email</span>
+          <input class="contact-input" type="email" required />
+      </label>
+      <label class="contact-label">
+        <span>phone</span>
+        <input class="contact-input" type="tel" required />
+    </label>
+    <label class="contact-label">
+      <span>name</span>
+      <input class="contact-input" type="text" required />
+  </label>
+  <label class="contact-label">
+    <span>message</span>
+    <textarea class="contact-message" required></textarea>
+  </label>
+  <button class="contact-btn">submit</button>
+</form>
+<div class="contact-newsletter">
+  <h3 class="newsletter__title">our newsletter</h3>
+  <p class="newsletter__title">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce at erat tincidunt
+    ante ultricies mollis at bibendum ligula. Donec quis velit finibus, tempus lacus
+    nec, eleifend orci. Nam sit amet nisl sem.
+  </p>
+  <form>
+    <input type="email" required />
+  <button>submit</button>
+</form>
 </div>
-<h3>contact us</h3>
+<div class="reach-us">
+<div class="card">
+<h3>+2547 00 123 456</h3>
+<p>
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce at erat
+</p>
+</div>
+<div class="card">
+<h3>h_bloggz@h_mail.com</h3>
+<p>
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce at erat
+</p>
+</div>
+<div class="card">
+<h3>Nairobi, Kenya</h3>
+<p>
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce at erat
+</p>
+</div>
+</div>
+</div>
+</div>
 <%- include("../Partials/footer.ejs")%>
+</div>
 </html>

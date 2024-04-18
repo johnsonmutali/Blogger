@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html>
 <%- include("../Partials/header.ejs")%>
-<div class="header">
-  <div class="logo">
-    <h1>Blogger</h1>
+<div id="container">
+  <%- include("../Partials/landing.ejs")%>
+  <div class="categories">
+    <%
+    genres.forEach(genre => {
+      %>
+      <a class="categories__link" href="#">
+        <h3 class="categories__card">
+          <%= genre%>
+        </h3>
+      </a>
+      <%
+    }) %>
   </div>
-  <%- include("../Partials/nav.ejs")%>
+  <%- include("../Partials/footer.ejs")%>
 </div>
-<div class="categories">
-  <a class="categories__link">
-    <h3 class="categories__card">
-      category name
-    </h3>
-  </a>
-</div>
-<%- include("../Partials/footer.ejs")%>
 </html>
