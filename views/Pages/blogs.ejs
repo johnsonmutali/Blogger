@@ -3,17 +3,30 @@
 <div id="container">
   <%- include("../Partials/landing.ejs")%>
   <div class="body">
-    <% blogs.forEach(blog => {
+    <%if (blogs.length > 0) {
       %>
-      <div class="blog">
-        <h3 class="blog__title"><%= blog.title%></h3>
-        <p class="blog__author">
-          <%= blog.snippet%>
-        </p>
-      </div>
+      <%blogs.forEach(blog => {
+        %> 
+        <a class="blog_link" href="/blogs/<%= blog._id%>">
+          <div class="blog">
+            <h3 class="blog__title"><%= blog.title%></h3>
+            <p class="blog__snippet">
+              <%= blog.snippet%>
+            </p>
+          </div>
+        </a>
+        <%
+      })%>
       <%
-    })%>
+    } else {
+      %>
+      <p>
+        no blogs at the moment. head to the create page to add more.
+      </p>
+      <%
+    }%>
   </div>
-  <%- include("../Partials/footer.ejs")%>
 </div>
+<%- include("../Partials/footer.ejs")%>
+</d>
 </html>
