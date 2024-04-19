@@ -38,29 +38,38 @@ app.get("/contact", (req, res) => {
 
 const blogsFilePath = path.join(__dirname, "./data/blogs.json")
 const blogsArray = JSON.parse(fs.readFileSync(blogsFilePath, "utf-8"))
-console.log(blogsArray)
 Blog.insertMany(blogsArray)
   .then(() => {
     console.log("added data")
-    db.close()
   })
   .catch(err => console.log(err))
 
 app.get("/blogs", (req, res) => {
-  res.render("Pages/blogs", { blogs: blogsArray })
+  Blog.find()
+    .then(result => {
+      res.render("Pages/blogs", { blogs: result })
+    })
+    .catch(err => {
+      console.log(err)
+    })
 })
 
 app.post("/blogs", (req, res) => {
-  console.log(req.body)
   const blog = new Blog(req.body)
-
+  console.log(req.body)
   blog.save()
-    //.then(result => res.redirect("/blogs"))
+    .then(result => res.redirect("/blogs"))
     .catch(err => console.log(err))
 })
 
-app.get("/blogs/:", (req, res) => {
-  res.render("Pages/blogs", { blogs: blogsArray })
+app.get("/blogs/:id", (req, res) => {
+  const id = req.params.id
+  console.log(id)
+  Blog.findById(id)
+    .then(result => {
+      res.render("Pages/blogDetails", { blog: result })
+    })
+    .catch(err => console.log(err))
 })
 
 app.get("/create", (req, res) => {
@@ -72,8 +81,7 @@ const genreArray = JSON.parse(fs.readFileSync(genresFilePath, 'utf-8'));
 
 Genre.insertMany(blogsArray)
   .then(() => {
-    console.log("added data")
-    db.close()
+    //console.log("added data")
   })
   .catch(err => console.log(err))
 
