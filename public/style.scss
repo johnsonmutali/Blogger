@@ -1,72 +1,16 @@
-.genre {
-    min-block-size: 100svh;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-    gap: 2rem;
-    padding: 10rem 10vw 5rem;
-    
-    .genre__card {
-        aspect-ratio: 1 / 1.689;
-        outline: 1px solid hsl(0 100% 100% / .4);
-        padding: 2rem;
-        text-align: center;
-        font-size: 2em;
-        font-weight: 200;
-        display: grid;
-        place-items: center;
-    }
-}.ErrorElement {
-  min-block-size: 100svh;
-  padding: 5rem 10vw;
-  
-  .error__type {
-    font-size: 1.75em;
-    font-weight: 800;
-    letter-spacing: 2px;
-    word-spacing: 4px;
-  }
-  
-  .error__title {
-    padding-block: 2rem;
-    font-size: 2.75em;
-    font-weight: 800;
-    word-spacing: 3px;
-  }
-  
-  .error__message {
-    line-height: 1.6;
-    max-inline-size: 60ch;
-    padding-block-end: .7rem;
-  }
-  
-  .error__solutions {
-    .error__solutions-item {
-      position: relative;
-      margin-inline: 3rem;
-      font-weight: .85em;
-      padding-block:
-        .75rem;
-      max-inline-size: 60ch;
-      
-      a {
-        padding-inline: .3rem;
-        color:
-          var(--_accent-color);
-        cursor: pointer;
-      }
-      
-      &::before {
-        content: "";
-        position:
-          absolute;
-        left: -1rem;
-        top: 50%;
-        transform: translateY(-50%);
-        block-size: .5rem;
-        aspect-ratio: 1;
-        border-radius: 50%;
-        background-color: var(--_accent-color);
-      }
-    }
-  }
+*,
+*::before,
+*::after {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  outline: 1px solid red;
+}
+
+* {
+  color: red;
+}
+
+body {
+  color: red;
 }
