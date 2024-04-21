@@ -6,7 +6,6 @@ const blogsFilePath = path.join(__dirname, "../data/blogs.json")
 const blogsArray = JSON.parse(fs.readFileSync(blogsFilePath, "utf-8"))
 Blog.insertMany(blogsArray)
   .then(() => {
-    console.log("blogController working")
   })
   .catch(err => console.log(err))
 
@@ -29,7 +28,6 @@ const blog_create = (req, res) => {
 
 const blog_details = (req, res) => {
   const id = req.params.id
-  console.log(id)
   Blog.findById(id)
     .then(result => {
       res.render("../views/Pages/blogDetails", { blog: result })

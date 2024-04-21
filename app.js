@@ -27,7 +27,17 @@ app.set("view engine", "ejs")
 //middleware && static files
 app.use(express.static("./public"))
 app.use(express.urlencoded({ extended: true }))
-//pages
+
+//protects some routes from unauthorised users
+const isAuthenticated = (req, res, next) => {
+  if (req.session && req.session.user) {
+    next()
+  } else {
+    res.redirect("/login")
+  }
+}
+
+//page middleware
 app.use("/blogs", blogRoutes)
 
 //gets 
@@ -50,12 +60,9 @@ app.get("/categories", (req, res) => {
   res.render("Pages/categories", { genres: genreArray })
 })
 
-app.get("/dashboard", (req, res) => {
-  res.render("Pages/dashboard", { genres: genreArray })
-})
+
 
 //user profile
-
 app.use(session({
   secret: "dark",
   resave: false,
@@ -73,19 +80,19 @@ app.get("/login", (req, res) => {
 app.post("/signup", (req, res) => {
   UserCredentials.find()
     .then(result => {
-      const credentials = new UserCredentials(req.body)
+      const { username, email, password } = req.body
       const users = result
 
-      if (users.some(user => user.username === credentials.username)) {
+      if (users.some(user => user.username === username)) {
         res.send("this name is already taken")
       }
-      else if (users.some(user => user.email === credentials.email)) {
+      else if (users.some(user => user.email === email)) {
         res.send("this email already exists in our database")
       } else {
-        credentials.save()
+        const newUser = new UserCredentials(req.body)
+        newUser.save()
           .then(result => {
-            console.log("credentials saved", result)
-            req.session.user = credentials;
+            req.session.user = newUser;
             res.redirect('/dashboard');
           })
       }
@@ -107,13 +114,11 @@ app.post("/login", async (req, res) => {
       const similarObject = users.find(user => isSimilar(user, newUserSession));
 
       if (similarObject) {
-        console.log('A similar object was found:', similarObject);
-        console.log("before declaring session: ", req.session)
         req.session.user = similarObject
-        console.log("after: ", req.session)
         res.redirect('/dashboard')
       } else {
         console.log('No similar object was found');
+        res.redirect('/login')
       }
 
     })
@@ -122,3 +127,11 @@ app.post("/login", async (req, res) => {
     })
 
 })
+
+app.get("/dashboard", isAuthenticated, (req, res) => {
+  console.log(req.session.user)
+  res.render("Pages/dashboard", {
+    message: `Welcome to the dashboard ${req.session.user.username}`
+  })
+})
+
