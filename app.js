@@ -50,6 +50,10 @@ app.get("/categories", (req, res) => {
   res.render("Pages/categories", { genres: genreArray })
 })
 
+app.get("/dashboard", (req, res) => {
+  res.render("Pages/dashboard", { genres: genreArray })
+})
+
 //user profile
 
 app.use(session({
@@ -63,7 +67,7 @@ app.get("/signup", (req, res) => {
 })
 
 app.get("/login", (req, res) => {
-  res.render("Pages/logind")
+  res.render("Pages/login")
 })
 
 app.post("/signup", (req, res) => {
@@ -82,25 +86,39 @@ app.post("/signup", (req, res) => {
           .then(result => {
             console.log("credentials saved", result)
             req.session.user = credentials;
-            res.redirect('/');
+            res.redirect('/dashboard');
           })
       }
     })
 })
 
-app.post("login", (req, res) => {
-  const { username, email, password } = new UserCredentials(req.body)
-  console.log(req.body)
-
+app.post("/login", async (req, res) => {
+  const newUserSession = req.body
   UserCredentials.find()
-    .then(result => {
-      const users = result
-      const user = users.find(user => user.username === username)
-      if (user && user.password === password) {
-        req.session.user = user
-        res.redirect("/dashboard")
+    .then(users => {
+      const targetObject = newUserSession
+
+      const isSimilar = (obj1, obj2) => {
+        return obj1.username === obj2.username &&
+          obj1.email === obj2.email &&
+          obj1.password === obj2.password
+      };
+
+      const similarObject = users.find(user => isSimilar(user, newUserSession));
+
+      if (similarObject) {
+        console.log('A similar object was found:', similarObject);
+        console.log("before declaring session: ", req.session)
+        req.session.user = similarObject
+        console.log("after: ", req.session)
+        res.redirect('/dashboard')
       } else {
-        res.send('Invalid username or password');
+        console.log('No similar object was found');
       }
+
     })
+    .catch(err => {
+      console.log(err)
+    })
+
 })
