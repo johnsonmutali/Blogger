@@ -7,6 +7,7 @@ const path = require("path")
 
 //models
 const Genre = require("./models/Genre.js")
+const authRoutes = require("./routes/AuthRoutes.js")
 const blogRoutes = require("./routes/blogRoutes.js")
 const UserCredentials = require("./models/UserCredentials.js")
 
@@ -63,70 +64,7 @@ app.get("/categories", (req, res) => {
 
 
 //user profile
-app.use(session({
-  secret: "dark",
-  resave: false,
-  saveUninitialized: true
-}))
-
-app.get("/signup", (req, res) => {
-  res.render("Pages/signup")
-})
-
-app.get("/login", (req, res) => {
-  res.render("Pages/login")
-})
-
-app.post("/signup", (req, res) => {
-  UserCredentials.find()
-    .then(result => {
-      const { username, email, password } = req.body
-      const users = result
-
-      if (users.some(user => user.username === username)) {
-        res.send("this name is already taken")
-      }
-      else if (users.some(user => user.email === email)) {
-        res.send("this email already exists in our database")
-      } else {
-        const newUser = new UserCredentials(req.body)
-        newUser.save()
-          .then(result => {
-            req.session.user = newUser;
-            res.redirect('/dashboard');
-          })
-      }
-    })
-})
-
-app.post("/login", async (req, res) => {
-  const newUserSession = req.body
-  UserCredentials.find()
-    .then(users => {
-      const targetObject = newUserSession
-
-      const isSimilar = (obj1, obj2) => {
-        return obj1.username === obj2.username &&
-          obj1.email === obj2.email &&
-          obj1.password === obj2.password
-      };
-
-      const similarObject = users.find(user => isSimilar(user, newUserSession));
-
-      if (similarObject) {
-        req.session.user = similarObject
-        res.redirect('/dashboard')
-      } else {
-        console.log('No similar object was found');
-        res.redirect('/login')
-      }
-
-    })
-    .catch(err => {
-      console.log(err)
-    })
-
-})
+app.use(authRoutes)
 
 app.get("/dashboard", isAuthenticated, (req, res) => {
   console.log(req.session.user)
