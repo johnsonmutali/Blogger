@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html>
 <body>
-<div id="container">
-  <%- include("../Partials/landing.ejs")%>
-  <div class="body">
-    <h2 class="blog-details__title"><%= blog._id %></h2>
-    <p class="blog-details__category">
-      <%= blog.category%>
-    </p>
-    <p class="blog-details__body">
-      <%= blog.body%>
-    </p>
-    <p class="blog-details__author">
-      <%= blog.author%>
-    </p>
+  <div id="container">
+    <%- include("../Partials/landing.ejs")%>
+    <div class="body">
+      <h2 class="blog-details__title"><%= blog._id %></h2>
+      <p class="blog-details__category">
+        <%= blog.category%>
+      </p>
+      <p class="blog-details__body">
+        <%= blog.body%>
+      </p>
+      <p class="blog-details__author">
+        <%= blog.author%>
+      </p>
+    </div>
+    <%- include("../Partials/footer.ejs")%>
   </div>
-  <%- include("../Partials/footer.ejs")%>
-</div>
 </body>
 </html>

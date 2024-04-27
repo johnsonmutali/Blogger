@@ -1,6 +1,7 @@
 const express = require("express")
 const session = require("express-session")
 const mongoose = require("mongoose")
+const cookieParser = require("cookie-parser")
 const db = mongoose.connection;
 const fs = require("fs")
 const path = require("path")
@@ -9,7 +10,6 @@ const path = require("path")
 const Genre = require("./models/Genre.js")
 const authRoutes = require("./routes/AuthRoutes.js")
 const blogRoutes = require("./routes/blogRoutes.js")
-const UserCredentials = require("./models/UserCredentials.js")
 
 const app = express()
 const dbURI = "mongodb+srv://mutali:0700390330@h-clusters.orif1ql.mongodb.net/Blogger?retryWrites=true&w=majority&appName=h-clusters"
@@ -28,6 +28,7 @@ app.set("view engine", "ejs")
 //middleware && static files
 app.use(express.static("./public"))
 app.use(express.urlencoded({ extended: true }))
+app.use(cookieParser())
 
 //protects some routes from unauthorised users
 const isAuthenticated = (req, res, next) => {
@@ -38,7 +39,7 @@ const isAuthenticated = (req, res, next) => {
   }
 }
 
-//page middleware
+//page middlgiven eware
 app.use("/blogs", blogRoutes)
 
 //gets 
