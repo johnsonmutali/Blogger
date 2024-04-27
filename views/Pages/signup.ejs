@@ -1,26 +1,85 @@
 <!DOCTYPE html>
 <html>
+<head>
+  <title>Signup Form</title>
+</head>
 <body>
   <div id="container">
     <div class="body">
       <div class="login">
-        <form action="/signup" method="POST">
+        <form action="/signup" method="POST" class="signup-form">
           <label>
-            <span>username: </span>
+            <span>Username: </span>
             <input type="text" name="username" required />
+          <div class="username error"></div>
         </label>
         <label>
-          <span>email: </span>
+          <span>Email: </span>
           <input type="email" name="email" required />
+        <div class="email error"></div>
       </label>
       <label>
-        <span>password: </span>
+        <span>Password: </span>
         <input type="password" name="password" required />
+      <div class="password error"></div>
     </label>
-    <button>sign in</button>
+    <div class="message error"></div>
+
+    <button type="submit">Sign Up</button>
   </form>
 </div>
 </div>
 </div>
+
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+const form = document.querySelector(".signup-form");
+const usernameError = document.querySelector(".username.error");
+const emailError = document.querySelector(".email.error");
+const passwordError = document.querySelector(".password.error");
+//const messageError = document.querySelector(".message.error");
+
+form.addEventListener("submit", async (e) => {
+e.preventDefault();
+
+const username = form.username.value;
+const email = form.email.value;
+const password = form.password.value;
+
+usernameError.textContent = "";
+emailError.textContent = "";
+passwordError.textContent = "";
+
+try {
+// Modify the body of the fetch request to send form-urlencoded data
+const formData = new URLSearchParams();
+formData.append('username', username);
+formData.append('email', email);
+formData.append('password', password);
+
+const res = await fetch("/signup", {
+method: "POST",
+body: formData,
+headers: {
+"Content-Type": "application/x-www-form-urlencoded",
+}
+});
+
+const data = await res.json();
+if (data.errors) {
+usernameError.textContent = data.errors.username
+emailError.textContent = data.errors.email;
+passwordError.textContent = data.errors.password;
+messageError.textContent = data.errors.message;
+}
+if (data.user){
+  location.assign("/")
+}
+} catch (error) {
+console.log("Network error : ", error);
+}
+});
+});
+</script>
 </body>
 </html>
