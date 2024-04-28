@@ -3,9 +3,9 @@ const jwt = require("jsonwebtoken")
 
 const requireAuth = (req, res, next) => {
   const token = req.cookies.jwt
-
+  const secret = process.env.dbURI
   if (token) {
-    jwt.verify(token, "house harkonnen", (err, decodedToken) => {
+    jwt.verify(token, secret, (err, decodedToken) => {
       if (err) {
         console.log(err.message)
         res.redirect("/login")
