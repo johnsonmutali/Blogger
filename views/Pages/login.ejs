@@ -75,7 +75,7 @@ passwordError.textContent = data.errors.password;
 messageError.textContent = data.errors.message;
 }
 if (data.user) {
-location.assign("/")
+location.assign("/dashboard")
 }
 } catch (error) {
 console.log("Network error : ", error);

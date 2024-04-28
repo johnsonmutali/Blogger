@@ -34,7 +34,7 @@ const handleError = (err) => {
 
 const maxAge = 3 * 24 * 60 * 60 * 1000
 const createToken = id => {
-  return jwt.sign({ id }, "my dark secret", {
+  return jwt.sign({ id }, "house harkonnen", {
     expiresIn: maxAge
   })
 }
@@ -50,7 +50,7 @@ module.exports.signup_post = async (req, res) => {
       httpOnly: true,
       maxAge: maxAge
     })
-    res.status(201).json({ user: user._id })
+    res.status(201).json({ user })
   } catch (err) {
     const errors = handleError(err)
     res.status(400).json({ errors })
@@ -70,9 +70,13 @@ module.exports.login_post = async (req, res) => {
       httpOnly: true,
       maxAge: maxAge
     })
-    res.status(200).json({ user: user._id })
+    res.status(200).json({ user })
   } catch (err) {
     const errors = handleError(err)
     res.status(400).json({ errors })
   }
+}
+module.exports.logout_get = (req, res) => {
+  res.cookie("jwt", "", { maxAge: 1 })
+  res.redirect("/")
 }

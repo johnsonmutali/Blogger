@@ -1,7 +1,9 @@
+require("dotenv").config()
 const express = require("express")
 const session = require("express-session")
 const mongoose = require("mongoose")
 const cookieParser = require("cookie-parser")
+const { requireAuth } = require("./middlewares/authMiddleWare.js")
 const db = mongoose.connection;
 const fs = require("fs")
 const path = require("path")
@@ -12,16 +14,15 @@ const authRoutes = require("./routes/AuthRoutes.js")
 const blogRoutes = require("./routes/blogRoutes.js")
 
 const app = express()
-const dbURI = "mongodb+srv://mutali:0700390330@h-clusters.orif1ql.mongodb.net/Blogger?retryWrites=true&w=majority&appName=h-clusters"
+const dbURI = process.env.dbURI
+console.log("db URI key: ", dbURI)
 
 mongoose.connect(dbURI)
   .then(res => {
     app.listen(3000)
     console.log("listening to port 3k")
   })
-  .catch(err => {
-    console.log(err)
-  })
+  .catch(err => console.log(err))
 
 app.set("view engine", "ejs")
 
@@ -42,35 +43,23 @@ const isAuthenticated = (req, res, next) => {
 //page middlgiven eware
 app.use("/blogs", blogRoutes)
 
-//gets 
-app.get("/", (req, res) => {
-  res.render("Pages/index")
-})
-
-app.get("/contact", (req, res) => {
-  res.render("Pages/contact")
-})
-
-app.get("/create", (req, res) => {
-  res.render("Pages/create")
-})
+//routes
+app.get("/", (req, res) => res.render("Pages/index"))
+app.get("/contact", (req, res) => res.render("Pages/contact"))
+app.get("/create", (req, res) => res.render("Pages/create"))
 
 const genresFilePath = path.join(__dirname, './data/genres.json');
 const genreArray = JSON.parse(fs.readFileSync(genresFilePath, 'utf-8'));
-
-app.get("/categories", (req, res) => {
-  res.render("Pages/categories", { genres: genreArray })
-})
-
-
+app.get("/categories", (req, res) => res.render("Pages/categories", {
+  genres: genreArray
+}))
 
 //user profile
 app.use(authRoutes)
 
-app.get("/dashboard", isAuthenticated, (req, res) => {
-  console.log(req.session.user)
+app.get("/dashboard", requireAuth, (req, res) => {
   res.render("Pages/dashboard", {
-    message: `Welcome to the dashboard ${req.session.user.username}`
+    message: `Welcome to the dashboard`
   })
 })
 
