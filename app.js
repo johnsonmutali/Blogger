@@ -3,7 +3,7 @@ const express = require("express")
 const session = require("express-session")
 const mongoose = require("mongoose")
 const cookieParser = require("cookie-parser")
-const { requireAuth } = require("./middlewares/authMiddleWare.js")
+const { requireAuth, checkUser } = require("./middlewares/authMiddleWare.js")
 const db = mongoose.connection;
 const fs = require("fs")
 const path = require("path")
@@ -44,6 +44,7 @@ const isAuthenticated = (req, res, next) => {
 app.use("/blogs", blogRoutes)
 
 //routes
+app.get("*", checkUser)
 app.get("/", (req, res) => res.render("Pages/index"))
 app.get("/contact", (req, res) => res.render("Pages/contact"))
 app.get("/create", (req, res) => res.render("Pages/create"))
