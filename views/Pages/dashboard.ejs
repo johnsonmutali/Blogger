@@ -3,8 +3,31 @@
 <%- include("../Partials/header.ejs")%>
 <body>
   <div id="container">
-    <%- include("../Partials/landing.ejs")%>
-    <h1><%= message%></h1>
+    <div class="dash-landing">
+      <div class="cover">
+        <h1><%= message%></h1>
+      </div>
+      <div class="user-info">
+        <div class="dp">
+          <img class="dp__img" src="#">
+        </div>
+        <div class="profile-info">
+          <h3 class="username"><%= user.username%></h3>
+          <p class="email">
+            <%= user.email%>
+          </p>
+          <p class="about">
+            about
+          </p>
+          <a class="nav_link" href="/edit-profile">edit profile</a>
+        </div>
+      </div>
+    </div>
+    <div class="dash-body">
+
+    </div>
+
+    <a class="nav_link" href="/create">create</a>
     <%- include("../Partials/footer.ejs")%>
   </div>
 </body>
