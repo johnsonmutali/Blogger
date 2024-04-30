@@ -48,6 +48,7 @@ app.get("*", checkUser)
 app.get("/", (req, res) => res.render("Pages/index"))
 app.get("/contact", (req, res) => res.render("Pages/contact"))
 app.get("/create", (req, res) => res.render("Pages/create"))
+app.get("/edit-profile", (req, res) => res.render("Pages/editProfile"))
 
 const genresFilePath = path.join(__dirname, './data/genres.json');
 const genreArray = JSON.parse(fs.readFileSync(genresFilePath, 'utf-8'));

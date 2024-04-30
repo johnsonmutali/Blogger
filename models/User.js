@@ -19,6 +19,10 @@ const userSchema = new Schema({
     type: String,
     required: true,
     minlength: [6, "password must have a minimum of 6 characters"]
+  },
+  posts: {
+    blogs: [],
+    media:[]
   }
 })
 const checkPassword = (a, b) => { return a === b }
